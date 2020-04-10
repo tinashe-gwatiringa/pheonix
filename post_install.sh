@@ -1,6 +1,13 @@
 #!/bin/bash
 
+
 #with respect to https://github.com/waleedahmad
+
+RESTORE='\033[0m'
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+YELLOW='\033[00;33m'
+
 
 if [[ $EUID -ne 0 ]]; then
    	echo "This script must be run as root" 
@@ -30,8 +37,12 @@ else
 			 15 "slack" off
 			 16 "gimp" off
 			 17 "kicad" off
+			 18 "mysql workbench (TBC)" off
+			 19 "wine (Really, is that essential?)" off
+			 20 "dash-to-dock" off
+			 21 "Steam" off
+			 22 "Hamatchi Server" off
 
-			 30 "Generate SSH Keys" off
 			)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
@@ -140,16 +151,44 @@ else
 			;;
 
 			18) 
-			echo "Installing MySQLWorkbench"
-			echo "still need to work out the way to install 4.2.6"
+			echo -e "${GREEN}Installing MySQLWorkbench${RESTORE}"
+			echo -e "${RED}still need to work out the way to install 4.2.6${RESTORE}"
 			;;
 
+			19) 
+			echo -e "${RED}Installing Wine${RESTORE}"
+			sudo dpkg --add-architecture i386
+			wget -nc https://dl.winehq.org/wine-builds/winehq.key
+			sudo apt-key add winehq.key 
+			sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+			sudo apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libxml2:i386 libasound2-plugins:i386 libsdl2-2.0-0:i386 libfreetype6:i386 libdbus-1-3:i386 libsqlite3-0:i386 -y
+			sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
+			sudo apt update 
+			sudo apt upgrade -y
+			sudo apt install --install-recommends winehq-stable -y
+			;;  	
 
-			30)
-				echo "Generating SSH keys"
-				ssh-keygen -t rsa -b 4096
-				;;
-			
+			20) 
+			echo -e "${GREEN}Installing Dash to Dock${RESTORE}"
+			echo -e "${RED}still need to work out the way to get this handy tweak${RESTORE}"
+			;;
+
+			21) 
+			echo -e "${GREEN}Installing Steam${RESTORE}"
+			sudo apt install steam-installer -y
+			steam
+			;;
+
+			22)
+			echo -e "${GREEN}Installing hamatchi${RESTORE}" 
+			sudo add-apt-repository -y ppa:webupd8team/haguichi
+			sudo apt update
+			sudo apt install -y haguichi
+
+
+					
 	    esac
 	done
 fi
+
+
