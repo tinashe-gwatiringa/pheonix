@@ -64,7 +64,7 @@ else
 				;;
     		3)	
 				echo "Installing Python and Others"
-				sudo apt install python -y && sudo apt install python3 -y
+				sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
 				;;
 				
 			4)
@@ -152,6 +152,7 @@ else
 
 			18) 
 			echo -e "${GREEN}Installing MySQLWorkbench${RESTORE}"
+			# mysql-workbench-community-6.3.10-1ubuntu17.10-amd64
 			echo -e "${RED}still need to work out the way to install 4.2.6${RESTORE}"
 			;;
 
@@ -184,11 +185,14 @@ else
 			sudo add-apt-repository -y ppa:webupd8team/haguichi
 			sudo apt update
 			sudo apt install -y haguichi
+			;;
 
-
+			23) 
+			echo "Eagle"
+			#https://github.com/Blunk-electronic/EAGLE_Linux_Installer
+			;;
 					
 	    esac
 	done
 fi
-
 
