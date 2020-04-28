@@ -17,7 +17,7 @@ else
 	#sudo apt install curl -y
 
 	sudo apt-get install dialog
-	cmd=(dialog --separate-output --checklist "Please Select Software you want to install:" 22 76 16)
+	cmd=(dialog --separate-output --checklist "Please select software you want to install:" 22 76 16)
 	options=(1 "VS Code" on # any option can be set to default to "on"
 		2 "Tilda" on
 		3 "Albert" off
@@ -34,12 +34,12 @@ else
 		14 "Cutecom" off
 		15 "Slack" off
 		16 "Inkscape" off
-		17 "kicad" off
+		17 "Kicad" off
 		18 "Mysql workbench (TBC)" off
 		19 "Wine (Really, is that essential?)" off
 		20 "Steam" off
-		21 "python and other essentials" off
-		22 "Fusuma (for laptop touchpad)"
+		21 "Python and other essentials" off
+		22 "Fusuma" off
 		23 "GitKraken" off
 	)
 	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -56,21 +56,21 @@ else
 			;;
 
 		2)
-			echo "${GREEN}Installing tilda${RESTORE}"
+			echo "${GREEN}Installing Tilda${RESTORE}"
 			sudo apt install tilda -y
 			;;
 		3)
-			echo "${GREEN}Installing albert${RESTORE}"
+			echo "${GREEN}Installing Albert${RESTORE}"
 			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
 			;;
 
 		4)
-			echo "${GREEN}Installing htop${RESTORE}"
+			echo "${GREEN}Installing Htop${RESTORE}"
 			sudo apt install htop
 			;;
 
 		5)
-			echo "${GREEN}Installing git, please congiure git later...${RESTORE}"
+			echo "${GREEN}Installing Git, please congiure git later...${RESTORE}"
 			apt install git -y
 			;;
 
@@ -115,27 +115,27 @@ else
 			;;
 
 		12)
-			echo "${GREEN}Installing gdebi${RESTORE}"
+			echo "${GREEN}Installing Gdebi${RESTORE}"
 			sudo apt install gdebi -y
 			;;
 
 		13)
-			echo "${GREEN}Installing transmission${RESTORE}"
+			echo "${GREEN}Installing Transmission${RESTORE}"
 			sudo apt install transmission -y
 			;;
 
 		14)
-			echo "${GREEN}Installing cutecom${RESTORE}"
+			echo "${GREEN}Installing Cutecom${RESTORE}"
 			sudo apt install cutecom -y
 			;;
 
 		15)
-			echo "${GREEN}Installing slack${RESTORE}"
+			echo "${GREEN}Installing Slack${RESTORE}"
 			sudo snap install slack --classic
 			;;
 
 		16)
-			echo "${GREEN}Installing inkscape${RESTORE}"
+			echo "${GREEN}Installing Inkscape${RESTORE}"
 			sudo apt install inkscape -y
 			;;
 
@@ -172,17 +172,17 @@ else
 			;;
 
 		21)
-			echo "${GREEN}Installing Python and Others${RESTORE}"
+			echo "${GREEN}Installing Python and others${RESTORE}"
 			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
 			;;
 
 		22)
-			echo "${GREEN}Installing fusuma, configure later${RESTORE}"
+			echo "${GREEN}Installing Fusuma, please configure later...${RESTORE}"
 			sudo apt install libinput-tools && xdotool
 			sudo gem i fusuma
 			;;
 		23)
-			echo "${GREEN}Installing GitKraken, please congiure git later...${RESTORE}"
+			echo "${GREEN}Installing GitKraken, please configure git later...${RESTORE}"
 			wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
 			sudo dpkg -i gitkraken-amd64.deb
 			;;
