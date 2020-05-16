@@ -180,9 +180,17 @@ else
 
 		22)
 			echo -e "${GREEN}Installing Fusuma, please configure later...${RESTORE}"
-			sudo apt install libinput-tools -y && xdotool
+			# From https://github.com/iberianpig/fusuma
+			sudo gpasswd -a $USER input
+			sudo apt install libinput-tools -y
+			sudo apt install xdotool -y
 			sudo apt install ruby -y
 			sudo gem i fusuma
+			gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled
+
+			mkdir -p ~/.config/fusuma
+			cp configurations/fusuma/config.yml ~/.config/fusuma/.
+			echo -e "${GREEN}Please add to start up programs and configure later...${RESTORE}"
 			;;
 		23)
 			echo -e "${GREEN}Installing GitKraken, please configure git later...${RESTORE}"
