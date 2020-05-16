@@ -166,7 +166,7 @@ else
 			sudo apt upgrade -y
 			sudo apt install --install-recommends winehq-stable -y
 			;;
-
+ 
 		20)
 			echo -e "${GREEN}Installing Steam${RESTORE}"
 			sudo apt install steam-installer -y
@@ -175,7 +175,8 @@ else
 
 		21)
 			echo -e "${GREEN}Installing Python and others${RESTORE}"
-			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
+			sudo apt install python -y && sudo apt install python3 -y
+			sudo apt install python-pip -y && sudo apt install python3-pip -y
 			;;
 
 		22)
