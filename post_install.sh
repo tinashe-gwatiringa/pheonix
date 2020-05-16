@@ -11,14 +11,16 @@ if [[ $EUID -ne 0 ]]; then
 	echo -e "${RED}This script must be run as root${RESTORE}"
 	exit 1
 else
-	#Update and Upgrade
-	#echo -e  "Updating and Upgrading"
-	#sudo apt update && sudo apt upgrade -y
-	#sudo apt install curl -y
+	echo -e "${GREEN}Updating and Upgrading${RESTORE}"
+	sudo apt update && sudo apt upgrade -y
 
+	echo -e "${GREEN}Installing basic utilities${RESTORE}"
+	sudo apt install curl -y
 	sudo apt-get install dialog
+
 	cmd=(dialog --separate-output --checklist "Please select software you want to install:" 22 76 16)
-	options=(1 "VS Code" on # any option can be set to default to "on"
+	options=(
+		1 "VS Code" on # any option can be set to default to "on"
 		2 "Tilda" on
 		3 "Albert" off
 		4 "Htop" on
@@ -48,7 +50,7 @@ else
 		case $choice in
 		1)
 			echo -e "${GREEN}Installing VS Code${RESTORE}"
-			echo -e  "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vs-code.list
+			echo -e "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vs-code.list
 			curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >microsoft.gpg
 			sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 			sudo apt-get update
@@ -56,34 +58,34 @@ else
 			;;
 
 		2)
-			echo -e  "${GREEN}Installing Tilda${RESTORE}"
+			echo -e "${GREEN}Installing Tilda${RESTORE}"
 			sudo apt install tilda -y
 			;;
 		3)
-			echo -e  "${GREEN}Installing Albert${RESTORE}"
+			echo -e "${GREEN}Installing Albert${RESTORE}"
 			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
 			;;
 
 		4)
-			echo -e  "${GREEN}Installing Htop${RESTORE}"
+			echo -e "${GREEN}Installing Htop${RESTORE}"
 			sudo apt install htop -y
 			;;
 
 		5)
-			echo -e  "${GREEN}Installing Git, please congiure git later...${RESTORE}"
+			echo -e "${GREEN}Installing Git, please congiure git later...${RESTORE}"
 			apt install git -y
 			;;
 
 		6)
-			echo -e  "${GREEN}Installing VLC Media Player${RESTORE}"
+			echo -e "${GREEN}Installing VLC Media Player${RESTORE}"
 			apt install vlc -y
 			;;
 		7)
-			echo -e  "${GREEN}Installing Gnome Tweak Tool${RESTORE}"
+			echo -e "${GREEN}Installing Gnome Tweak Tool${RESTORE}"
 			apt install gnome-tweak-tool -y
 			;;
 		8)
-			echo -e  "${GREEN}Installing Google Chrome${RESTORE}"
+			echo -e "${GREEN}Installing Google Chrome${RESTORE}"
 			wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 			sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 			apt-get update
@@ -91,22 +93,22 @@ else
 			;;
 
 		9)
-			echo -e  "${GREEN}Installing Skype For Linux${RESTORE}"
+			echo -e "${GREEN}Installing Skype For Linux${RESTORE}"
 			apt install apt-transport-https -y
 			curl https://repo.skype.com/data/SKYPE-GPG-KEY | apt-key add -
-			echo -e  "deb https://repo.skype.com/deb stable main" | tee /etc/apt/sources.list.d/skypeforlinux.list
+			echo -e "deb https://repo.skype.com/deb stable main" | tee /etc/apt/sources.list.d/skypeforlinux.list
 			apt update
 			apt install skypeforlinux -y
 			;;
 
 		10)
-			echo -e  "${GREEN}Installing Filezilla${RESTORE}"
+			echo -e "${GREEN}Installing Filezilla${RESTORE}"
 			sudo apt install filezilla -y
 			;;
 
 		11)
-			echo -e  "${GREEN}Installing Insomnia${RESTORE}"
-			echo -e  "deb https://dl.bintray.com/getinsomnia/Insomnia /" | sudo tee -a /etc/apt/sources.list.d/insomnia.list
+			echo -e "${GREEN}Installing Insomnia${RESTORE}"
+			echo -e "deb https://dl.bintray.com/getinsomnia/Insomnia /" | sudo tee -a /etc/apt/sources.list.d/insomnia.list
 			# Add public key used to verify code signature
 			wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc | sudo apt-key add -
 			# Refresh repository sources and install Insomnia
@@ -115,32 +117,32 @@ else
 			;;
 
 		12)
-			echo -e  "${GREEN}Installing Gdebi${RESTORE}"
+			echo -e "${GREEN}Installing Gdebi${RESTORE}"
 			sudo apt install gdebi -y
 			;;
 
 		13)
-			echo -e  "${GREEN}Installing Transmission${RESTORE}"
+			echo -e "${GREEN}Installing Transmission${RESTORE}"
 			sudo apt install transmission -y
 			;;
 
 		14)
-			echo -e  "${GREEN}Installing Cutecom${RESTORE}"
+			echo -e "${GREEN}Installing Cutecom${RESTORE}"
 			sudo apt install cutecom -y
 			;;
 
 		15)
-			echo -e  "${GREEN}Installing Slack${RESTORE}"
+			echo -e "${GREEN}Installing Slack${RESTORE}"
 			sudo snap install slack --classic
 			;;
 
 		16)
-			echo -e  "${GREEN}Installing Inkscape${RESTORE}"
+			echo -e "${GREEN}Installing Inkscape${RESTORE}"
 			sudo apt install inkscape -y
 			;;
 
 		17)
-			echo -e  "${GREEN}Installing Kicad${RESTORE}"
+			echo -e "${GREEN}Installing Kicad${RESTORE}"
 			sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
 			sudo apt-get update
 			sudo apt-get install kicad -y
@@ -172,18 +174,18 @@ else
 			;;
 
 		21)
-			echo -e  "${GREEN}Installing Python and others${RESTORE}"
+			echo -e "${GREEN}Installing Python and others${RESTORE}"
 			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
 			;;
 
 		22)
-			echo -e  "${GREEN}Installing Fusuma, please configure later...${RESTORE}"
+			echo -e "${GREEN}Installing Fusuma, please configure later...${RESTORE}"
 			sudo apt install libinput-tools -y && xdotool
 			sudo apt install ruby -y
 			sudo gem i fusuma
 			;;
 		23)
-			echo -e  "${GREEN}Installing GitKraken, please configure git later...${RESTORE}"
+			echo -e "${GREEN}Installing GitKraken, please configure git later...${RESTORE}"
 			wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
 			sudo dpkg -i gitkraken-amd64.deb
 			;;
