@@ -45,6 +45,7 @@ else
 		22 "Fusuma" off
 		23 "GitKraken" off
 		24 "Slack" off
+		25 "Spotify" off
 	)
 	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	clear
@@ -205,6 +206,12 @@ else
 			sudo apt install snap
 			wget -P tmp https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.3-amd64.deb
 			sudo apt install ./tmp/slack-desktop-*.deb -y
+			;;
+		25)
+			echo -e "${GREEN}Installing Spotify${RESTORE}"
+			curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -
+			echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+			sudo apt install spotify-client -y
 			;;
 		esac
 	done
