@@ -46,6 +46,7 @@ else
 		23 "GitKraken" off
 		24 "Slack" off
 		25 "Spotify" off
+		26 "Development tools (JavaScript, Docker, aws)" off
 	)
 	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	clear
@@ -178,8 +179,10 @@ else
 
 		21)
 			echo -e "${GREEN}Installing Python and others${RESTORE}"
-			sudo apt install python -y && sudo apt install python3 -y
-			sudo apt install python-pip -y && sudo apt install python3-pip -y
+			sudo apt install python3 -y
+			sudo apt install python3-pip -y
+			sudo pip3 install virtualenv
+			sudo -u ${USER} curl https://pyenv.run | bash
 			;;
 
 		22)
@@ -213,11 +216,23 @@ else
 			echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 			sudo apt install spotify-client -y
 			;;
+		26)
+			echo -e "${GREEN}Installing JavaScript tools${RESTORE}"
+			sudo apt install npm -y
+			wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+			echo -e "${GREEN}Installing Docker${RESTORE}"
+			sudo apt install docker docker-compose -y
+			sudo groupadd docker
+			sudo usermod -aG docker ${USER}
+			echo -e "${YELLOW}Logout required${RESTORE}"
+			echo -e "${GREEN}Installing awscli${RESTORE}"
+			sudo apt install awscli -y
+			;;
 		esac
 	done
 fi
 
 echo -e "${GREEN}Running final update${RESTORE}"
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade && sudo apt autoclean -y
 echo -e "${GREEN}Cleaning up${RESTORE}"
 sudo rm -r tmp
