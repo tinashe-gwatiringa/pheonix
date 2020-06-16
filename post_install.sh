@@ -20,11 +20,11 @@ else
 
 	cmd=(dialog --separate-output --checklist "Please select software you want to install:" 22 76 16)
 	options=(
-		1 "VS Code" on # any option can be set to default to "on"
-		2 "Tilda" on
+		1 "VS Code" off # any option can be set to default to "on"
+		2 "Tilda" off
 		3 "Albert" off
-		4 "Htop" on
-		5 "Git" on
+		4 "Htop" off
+		5 "Git" off
 		6 "VLC Media Player" off
 		7 "Gnome Tweak Tool" off
 		8 "Google Chrome" off
@@ -32,7 +32,7 @@ else
 		10 "Filezilla" off
 		11 "Insomnia" off
 		12 "Gdebi" off
-		13 "Transmission" on
+		13 "Transmission" off
 		14 "Cutecom" off
 		15 "Slack" off
 		16 "Inkscape" off
@@ -143,7 +143,7 @@ else
 
 		17)
 			echo -e "${GREEN}Installing Kicad${RESTORE}"
-			sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+			sudo add-apt-repository --yes ppa:js-reynaud/kicad-5-nightly
 			sudo apt-get update
 			sudo apt-get install kicad -y
 			;;
