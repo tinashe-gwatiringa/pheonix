@@ -11,7 +11,8 @@ if [[ $EUID -ne 0 ]]; then
 	echo -e "${RED}This script must be run as root${RESTORE}"
 	exit 1
 else
-	echo -e "${GREEN}Updating and Upgrading${RESTORE}"
+	mkdir tmp
+	echo -e "${GREEN}Updating and upgrading${RESTORE}"
 	sudo apt update && sudo apt upgrade -y
 
 	echo -e "${GREEN}Installing basic utilities${RESTORE}"
@@ -43,6 +44,7 @@ else
 		21 "Python and other essentials" off
 		22 "Fusuma" off
 		23 "GitKraken" off
+		24 "Slack" off
 	)
 	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	clear
@@ -166,7 +168,7 @@ else
 			sudo apt upgrade -y
 			sudo apt install --install-recommends winehq-stable -y
 			;;
- 
+
 		20)
 			echo -e "${GREEN}Installing Steam${RESTORE}"
 			sudo apt install steam-installer -y
@@ -198,6 +200,17 @@ else
 			wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
 			sudo dpkg -i gitkraken-amd64.deb
 			;;
+		24)
+			echo -e "${GREEN}Installing Slack${RESTORE}"
+			sudo apt install snap
+			wget -P tmp https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.3-amd64.deb
+			sudo apt install ./tmp/slack-desktop-*.deb -y
+			;;
 		esac
 	done
 fi
+
+echo -e "${GREEN}Running final update${RESTORE}"
+sudo apt update && sudo apt upgrade -y
+echo -e "${GREEN}Cleaning up${RESTORE}"
+sudo rm -r tmp

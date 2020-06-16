@@ -9,4 +9,4 @@ echo -e "${GREEN}Installing VS Code extensions${RESTORE}"
 
 while IFS= read -r extension; do
     sudo -u $USER code --install-extension $extension
-done < extensions.txt
+done <extensions.txt
