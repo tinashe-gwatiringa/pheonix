@@ -47,6 +47,7 @@ else
 		24 "Slack" off
 		25 "Spotify" off
 		26 "Development tools (JavaScript, Docker, aws)" off
+		27 "Fish terminal emulator" off
 	)
 	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	clear
@@ -228,7 +229,21 @@ else
 			echo -e "${GREEN}Installing awscli${RESTORE}"
 			sudo apt install awscli -y
 			;;
+		27)
+			echo -e "${GREEN}Installing terminal tools${RESTORE}"
+			sudo apt-add-repository ppa:fish-shell/release-3 -y
+			sudo apt-get update -y
+			sudo apt-get install fish -y
+			sudo chsh -s /usr/bin/fish
+			set -U fish_greeting ""
+
+			sudo apt install mate-terminal
+			echo -e "${GREEN}Select mate-terminal as the default${RESTORE}"
+			sudo update-alternative --config x-terminal-emulator
+			;;
+
 		esac
+
 	done
 fi
 
