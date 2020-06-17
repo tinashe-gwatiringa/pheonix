@@ -180,6 +180,8 @@ else
 
 		21)
 			echo -e "${GREEN}Installing Python and others${RESTORE}"
+			sudo apt install libffi-dev python-setuptools -y
+			sudo ldconfig
 			sudo apt install python3 -y
 			sudo apt install python3-pip -y
 			sudo pip3 install virtualenv
