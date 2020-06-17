@@ -182,10 +182,15 @@ else
 			echo -e "${GREEN}Installing Python and others${RESTORE}"
 			sudo apt install libffi-dev python-setuptools -y
 			sudo ldconfig
-			sudo apt install python3 -y
-			sudo apt install python3-pip -y
 			sudo pip3 install virtualenv
 			sudo -u ${USER} curl https://pyenv.run | bash
+			echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+            echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+			echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+			echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
+			sudo apt install python3 -y
+			sudo apt install python3-pip -y
 			;;
 
 		22)
