@@ -184,10 +184,10 @@ else
 			sudo ldconfig
 			sudo pip3 install virtualenv
 			sudo -u ${USER} curl https://pyenv.run | bash
-			echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-            echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-			echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-			echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+			echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.bashrc
+			echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.bashrc
+			echo 'eval "$(pyenv init -)"' >>~/.bashrc
+			echo 'eval "$(pyenv virtualenv-init -)"' >>~/.bashrc
 
 			sudo apt install python3 -y
 			sudo apt install python3-pip -y
@@ -235,8 +235,8 @@ else
 			echo -e "${GREEN}Installing awscli${RESTORE}"
 			sudo apt install awscli -y
 			curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "tmp/awscliv2.zip"
-            unzip tmp/awscliv2.zip -d tmp/
-            sudo ./tmp/aws/install
+			unzip tmp/awscliv2.zip -d tmp/
+			sudo ./tmp/aws/install
 			;;
 		27)
 			echo -e "${GREEN}Installing terminal tools${RESTORE}"
@@ -249,6 +249,12 @@ else
 			sudo apt install mate-terminal -y
 			echo -e "${GREEN}Select mate-terminal as the default${RESTORE}"
 			sudo update-alternatives --config x-terminal-emulator
+			;;
+
+		28)
+			echo -e "${GREEN}Installing pycharm${RESTORE}"
+			wget -qO- https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
+			echo -e "${YELLOW}Complete installation using jetbrains-toolbox${RESTORE}"
 			;;
 
 		esac
