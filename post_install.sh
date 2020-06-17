@@ -209,7 +209,6 @@ else
 			;;
 		24)
 			echo -e "${GREEN}Installing Slack${RESTORE}"
-			sudo apt install snap
 			wget -P tmp https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.3-amd64.deb
 			sudo apt install ./tmp/slack-desktop-*.deb -y
 			;;
@@ -220,7 +219,7 @@ else
 			sudo apt install spotify-client -y
 			;;
 		26)
-			echo -e "${GREEN}Installing JavaScript tools${RESTORE}"
+			echo -e "${GREEN}Installing development tools${RESTORE}"
 			sudo apt install npm -y
 			wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 			echo -e "${GREEN}Installing Docker${RESTORE}"
@@ -230,6 +229,9 @@ else
 			echo -e "${YELLOW}Logout required${RESTORE}"
 			echo -e "${GREEN}Installing awscli${RESTORE}"
 			sudo apt install awscli -y
+			curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "tmp/awscliv2.zip"
+            unzip tmp/awscliv2.zip -d tmp/
+            sudo ./tmp/aws/install
 			;;
 		27)
 			echo -e "${GREEN}Installing terminal tools${RESTORE}"
@@ -239,9 +241,9 @@ else
 			sudo chsh -s /usr/bin/fish
 			set -U fish_greeting ""
 
-			sudo apt install mate-terminal
+			sudo apt install mate-terminal -y
 			echo -e "${GREEN}Select mate-terminal as the default${RESTORE}"
-			sudo update-alternative --config x-terminal-emulator
+			sudo update-alternatives --config x-terminal-emulator
 			;;
 
 		esac
