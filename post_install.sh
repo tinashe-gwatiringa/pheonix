@@ -7,11 +7,19 @@ RED='\033[00;31m'
 GREEN='\033[00;32m'
 YELLOW='\033[00;33m'
 
+TEMP_DIR='tmp'
+
+function get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
+
 if [[ $EUID -ne 0 ]]; then
 	echo -e "${RED}This script must be run as root${RESTORE}"
 	exit 1
 else
-	mkdir tmp
+	mkdir TEMP_DIR
 	echo -e "${GREEN}Updating and upgrading${RESTORE}"
 	sudo apt update && sudo apt upgrade -y
 
@@ -35,7 +43,7 @@ else
 		12 "Gdebi" off
 		13 "Transmission" off
 		14 "Cutecom" off
-		15 "Slack" off
+		15 "Polybar" off
 		16 "Inkscape" off
 		17 "Kicad" off
 		18 "Mysql workbench (TBC)" off
@@ -67,8 +75,9 @@ else
 			sudo apt install tilda -y
 			;;
 		3)
-			echo -e "${GREEN}Installing Albert${RESTORE}"
+			echo -e "${GREEN}Installing Python${RESTORE}"
 			sudo apt install python -y && sudo apt install python3 -y && sudo apt install python-pip -y
+			
 			;;
 
 		4)
@@ -137,8 +146,17 @@ else
 			;;
 
 		15)
-			echo -e "${GREEN}Installing Slack${RESTORE}"
-			sudo snap install slack --classic
+			echo -e "${GREEN}Installing Polybar${RESTORE}"
+			VERSION=get_latest_release "polybar/polybar"
+			wget -P $TEMP_FOLDER -q "https://github.com/polybar/polybar/releases/download/$VERSION/polybar-$VERSION.tar"
+			
+			WORKING_DIR=pwd
+			cd $TEMP_DIR
+			tar -xvf polybar-$VERSION.tar
+			cd $polybar-$VERSION
+			./build
+			
+			cd $WORKING_DIR
 			;;
 
 		16)
@@ -191,6 +209,9 @@ else
 
 			sudo apt install python3 -y
 			sudo apt install python3-pip -y
+
+			# Installing in root, need to work on this
+			sudo -u ${USER} curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 			;;
 
 		22)
@@ -205,6 +226,7 @@ else
 
 			mkdir -p ~/.config/fusuma
 			cp configurations/fusuma/config.yml ~/.config/fusuma/.
+			sudo gpasswd -a $USER input
 			echo -e "${GREEN}Please add to start up programs and configure later...${RESTORE}"
 			;;
 		23)
@@ -214,8 +236,8 @@ else
 			;;
 		24)
 			echo -e "${GREEN}Installing Slack${RESTORE}"
-			wget -P tmp https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.3-amd64.deb
-			sudo apt install ./tmp/slack-desktop-*.deb -y
+			wget -P $TEMP_DIR https://downloads.slack-edge.com/linux_releases/slack-desktop-4.4.3-amd64.deb
+			sudo apt install ./$TEMP_DIR/slack-desktop-*.deb -y
 			;;
 		25)
 			echo -e "${GREEN}Installing Spotify${RESTORE}"
@@ -234,9 +256,9 @@ else
 			echo -e "${YELLOW}Logout required${RESTORE}"
 			echo -e "${GREEN}Installing awscli${RESTORE}"
 			sudo apt install awscli -y
-			curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "tmp/awscliv2.zip"
-			unzip tmp/awscliv2.zip -d tmp/
-			sudo ./tmp/aws/install
+			curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$TEMP_DIR/awscliv2.zip"
+			unzip $TEMP_DIR/awscliv2.zip -d $TEMP_DIR/
+			sudo ./$TEMP_DIR/aws/install
 			;;
 		27)
 			echo -e "${GREEN}Installing terminal tools${RESTORE}"
@@ -265,4 +287,4 @@ fi
 echo -e "${GREEN}Running final update${RESTORE}"
 sudo apt update && sudo apt upgrade && sudo apt autoclean -y
 echo -e "${GREEN}Cleaning up${RESTORE}"
-sudo rm -r tmp
+sudo rm -r $TEMP_DIR
