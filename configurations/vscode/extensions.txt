@@ -19,3 +19,5 @@ rust-lang.rust
 yzane.markdown-pdf
 yzhang.markdown-all-in-one
 coenraads.bracket-pair-colorizer
+atlassian.atlascode
+espressif.esp-idf-extension
